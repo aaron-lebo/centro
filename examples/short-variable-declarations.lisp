@@ -1,10 +1,8 @@
-(in-package :go.short-variable-declarations)
-
 (in main
-    fmt)
+  fmt)
 
-(func main ()
+(func main () nil
   (var :i :j int 1 2)
-  (@ :k 3)
-  (@ :c :python :java true false "no!")
-  (fmt/println i j k c python java))
+  (be :k 3)
+  (be :c :python :java true false "no!")
+  (fmt.Println i j k c python java))

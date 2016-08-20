@@ -1,12 +1,10 @@
-(in-package :go.type-conversions)
-
 (in main
-    fmt
-    math)
+  fmt
+  math)
 
-(func main ()
+(func main () nil
   (var
     :x :y int 3 4
-    :f float64 (math/sqrt (float64 (+ (* x x) (* y y))))
+    :f float64 (math.Sqrt (float64 (+ (* x x) (* y y))))
     :z uint (unint f))
-  (fmt/println x y z))
+  (fmt.Println x y z))

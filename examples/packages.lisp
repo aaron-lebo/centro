@@ -1,9 +1,7 @@
-(in-package :go.packages)
-
 (in main
-    fmt
-    math/rand)
+  fmt
+  math/rand)
 
-(func main ()
-  (fmt/println "My favorite number is" (rand/intn 10)))
+(func main () nil
+  (fmt.Println "My favorite number is" (rand.Intn 10)))
 

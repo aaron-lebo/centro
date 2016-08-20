@@ -2,5 +2,5 @@
   fmt
   math)
 
-(func main ()
+(func main () nil
   (fmt.Println math.Pi))

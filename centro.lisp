@@ -17,29 +17,33 @@
     (to-go k) (<< "=") (to-go v))
   (<< ")~%"))
 
-(defun func (&rest args)
-  (<< "func ")
-  (if (symbolp (first args))
-      (to-go (pop args)))
-  (<< "(")
-  (loop :for (param . rest) :on (pop args) :do
+(defun func (name args return-type &rest body)
+  (<< "func ~a(" name)
+  (loop :for (param . rest) :on args :do
     (to-go param)
     (if (eq 'int (first rest))
         (<< " ")
         (<< ",")))
-  (<< ")")
-  (if (symbolp (first args))
-      (to-go (pop args)))
-  (<< "{~%")
-  (loop :for statement :in args :do
+  (<< ")(")
+  (loop :for type :in return-type :do
+    (to-go type) (<< ","))
+  (<< "){~%")
+  (loop :for statement :in body :do
     (to-go statement)
     (if (eq statement :return)
         (<< " ")
         (<< "~%")))
   (<< "}~%"))
 
+(defun be (&rest args)
+  (loop :for (k v) :on args :while v :do
+    (to-go k) (<< " := ") (to-go v)))
+
 (defun in (pkg &rest body)
   (<< "~(package ~a~%import(~{\"~a\";~})~)~%" pkg body))
+
+(defun return* (&rest args)
+  (<< "return ~{~a~^,~}" args))
 
 (defun math (op left right)
   (<< "~a ~a ~a" left op right))
@@ -54,15 +58,17 @@
      (case (first node)
        (+ (apply #'math node))
        (- (apply #'math node))
+       (be (apply #'be (rest node)))
        (const (apply #'const (rest node)))
        (func (apply #'func (rest node)))
        (in (apply #'in (rest node)))
+       (return (apply #'return* (rest node)))
        (t (apply #'call node))))))
 
 (defun read! (path)
   (if (string= (pathname-type path) "lisp")
       (with-open-file (file path)
-        (loop :for exp = (read file nil) :while exp :do
+        (loop :for exp := (read file nil) :while exp :do
           (to-go exp)))))
 
 (defun main (argv)

@@ -1,8 +1,6 @@
-(in-package :go.type-inference)
-
 (in main
-    fmt)
+  fmt)
 
-(func main ()
-  (! :v 42) (// "change me!")
-  (fmt/printf "v is of type %T\n" v))
+(func main () nil
+  (be! :v 42) (// "change me!")
+  (fmt.Printf "v is of type %T\n" v))

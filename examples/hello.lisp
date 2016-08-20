@@ -1,6 +1,6 @@
 (in main
   fmt)
 
-(func main ()
+(func main () nil
   (fmt.Println "Hello, 世界"))
 
